@@ -256,9 +256,6 @@ class DataContainer:
 			objlist=None
 			response=None
 
-		if DataContainer.callgraphfile:
-			self.writeGraphPos("end")
-
 		logging.debug("IterateUrl: Memory usage : %s (kb)" % resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
 
 	def process(self):
@@ -267,8 +264,6 @@ class DataContainer:
 		for t in self.indata:
 			if self.indata[t]:
 				self.infostr=self.infostr+"|"+t+":"+self.indata[t]
-		if DataContainer.callgraphfile:
-			self.writeGraphPos()
 		for res in self.config:
 			curt=time.time()
 			self.linecount=0
