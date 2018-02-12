@@ -1,0 +1,176 @@
+{
+"resources" : [
+	{
+		"level"		:       { "path" : "repository",        "type" : "static"},
+		"_comment"	:	"From http://www.ebi.ac.uk/ols/docs/api",
+		"fields"	:	{
+			"reponame"	:	{ "path" : "EBI-OLS", "type" : "static"}
+		},
+		"resources"	:	[
+			{
+				"level"		:	{ "path" : "ontologies",        "type" : "static"},
+				"url" 		:	{ "path" : "http://www.ebi.ac.uk/ols/api/ontologies?size=500", "type" : "static"},
+				"next"		:	{ "path" : "_links.next.href",		"type" : "literal"},
+				"list"		:	{ "path" : "_embedded.ontologies",	"type" : "list"},
+				"fields"	:	{
+					"ontoiri"	:	{ "path" : "config.id",			"type" : "literal"},
+					"ontoprefix"	:	{ "path" : "ontologyId",		"type" : "literal"},
+					"ontoname"	:	{ "path" : "config.title",		"type" : "literal"},
+					"ontoversion"	:	{ "path" : "config.version",		"type" : "literal"},
+					"ontovdate"	:	{ "path" : "loaded",			"type" : "literal"}
+				},
+				"resources"	:	[
+					{
+						"level"		:	{ "path" : "classes",        "type" : "static"},
+						"url" 		:	{ "path" : "http://www.ebi.ac.uk/ols/api/ontologies/<ontoprefix>/terms?size=1000",	"type" : "static"},
+						"next"		:	{ "path" : "_links.next.href",	"type" : "literal"},
+						"list"		:	{ "path" : "_embedded.terms",	"type" : "list"},	
+						"fields"	:	{
+							"termid"	:	{ "path" : "iri",		"type" : "literal"},
+							"label"		:	{ "path" : "label",		"type" : "literal"},
+							"description"	:	{ "path" : "description",	"type" : "list"},
+							"synonyms"	:	{ "path" : "synonyms",		"type" : "list"},
+							"obsolete"	:	{ "path" : "is_obsolete",	"type" : "literal"},
+							"shortform"	:	{ "path" : "short_form",	"type" : "literal"}
+						}
+					},
+					{
+						"level"		:	{ "path" : "instances",        "type" : "static"},
+						"url" 		:	{ "path" : "http://www.ebi.ac.uk/ols/api/ontologies/<ontoprefix>/individuals?size=1000", "type" : "static"},
+						"next"		:	{ "path" : "_links.next.href",	"type" : "literal"},
+						"list"		:	{ "path" : "_embedded.individuals",	"type" : "list"},
+						"fields"	:	{
+							"termid"	:	{ "path" : "iri",		"type" : "literal"},
+							"label"		:	{ "path" : "label",		"type" : "literal"},
+							"synonyms"	:	{ "path" : "synonyms",	"type" : "list"},
+							"description"	:	{ "path" : "annotation.['IAO_0000115', 'definition']", "type" : "list"}
+						}
+					}
+				]
+			}
+		]
+	},
+	{
+		"level"		:       { "path" : "repository",        "type" : "static"},
+		"_comment"	:	"From http://data.bioontology.org/documentation",
+		"config"	:	{
+			"apikey":	{ "path" : "<YOUR BIOPORTAL API KEY HERE>",		"type" : "static"}
+		},		
+		"fields"	:	{
+			"reponame"	:	{ "path" : "Bioportal",		"type" : "static"}
+		},	
+		"resources"		:	[
+			{
+				"level"		:	{ "path" : "ontologies",        "type" : "static"},
+				"url"		:	{ "path" : "http://data.bioontology.org/ontologies?apikey=<apikey>&format=json&pagesize=1000", "type" : "static"},
+				"next"		:	{ "path" : "links.nextPage",	"type" : "literal"},
+				"list"		:	{ "path" : "$",			"type" : "list"},
+				"fields"	:	{
+					"ontoiri"	:	{ "path" : "@id",		"type" : "literal"},
+					"ontoprefix"	:	{ "path" : "acronym",		"type" : "literal"},
+					"ontoname"	:	{ "path" : "name",		"type" : "literal"}
+				},
+				"extra"	:	[
+					{
+						"url"   :       { "path" : "http://data.bioontology.org/ontologies/<ontoprefix>/latest_submission?apikey=<apikey>&format=json", "type" : "static"},
+						"fields"	: {
+							"ontoversion"	:	{ "path" : "version",			"type" : "literal"},
+							"ontovdate"	:	{ "path" : "released",			"type" : "literal"},
+							"ontoformat"	:	{ "path" : "hasOntologyLanguage",	"type" : "literal"}
+						}
+					}	
+				],
+				"resources"		:	[
+					{
+						"level"		:	{ "path" : "classes",        "type" : "static"},
+						"url" 		:	{ "path" : "http://data.bioontology.org/ontologies/<ontoprefix>/classes?apikey=<apikey>&format=json&pagesize=1000",  "type" : "static"},
+						"next"		:	{ "path" : "links.nextPage",	"type" : "literal"},
+						"list"		:	{ "path" : "collection",	"type" : "list"},
+						"fields"	:	{
+							"termid"	:	{ "path" : "@id",		"type" : "literal"},
+							"label"		:	{ "path" : "prefLabel",		"type" : "literal"},
+							"description"	:	{ "path" : "definition",	"type" : "list"},
+							"synonyms"	:	{ "path" : "synonym",		"type" : "list"},
+							"obsolete"	:	{ "path" : "obsolete",		"type" : "literal"},
+							"shortform"	:	{ "path" : "cui",	"type" : "literal"}
+						}
+					},
+					{
+						"level"		:	{ "path" : "instances",        "type" : "static"},
+						"url" 		:	{ "path" : "http://data.bioontology.org/ontologies/<ontoprefix>/instances?apikey=<apikey>&format=json&pagesize=1000", "type" : "static"},
+						"next"		:	{ "path" : "links.nextPage",	"type" : "literal"},
+						"list"		:	{ "path" : "collection",	"type" : "list"},
+						"fields"	:	{
+							"termid"	:	{ "path" : "id",		"type" : "literal"},
+							"label"		:	{ "path" : "properties.['http://data.bioontology.org/metadata/def/prefLabel', 'http://www.w3.org/2004/02/skos/core#prefLabel']","type" : "list"},
+							"synonyms"	:	{ "path" : "properties.['http://www.w3.org/2004/02/skos/core#altLabel']",	"type" : "list"},
+							"description"	:	{ "path" : "properties.['http://purl.obolibrary.org/obo/IAO_0000115','http://www.w3.org/2004/02/skos/core#scopeNote', 'http://www.w3.org/2004/02/skos/core#definition', 'http://www.w3.org/2004/02/skos/core#editorialNote']", "type" : "list"}
+						}
+					}
+				]
+			}
+		]
+	},
+	{
+		"level"		:	{ "path" : "repository",        "type" : "static"},
+		"_comment"	:	"From http://data.agroportal.lirmm.fr/documentation",
+		"config"	:	{
+			"apikey"	:	{ "path" : "<YOUR AGROPORTAL API KEY HERE>", "type" : "static"}
+		},
+		"fields"	:	{
+			"reponame"	:	{ "path" : "Agroportal",	"type" : "static"}
+		},
+		"resources": [ 
+			{
+				"level"	:	{ "path" : "ontologies",        "type" : "static"},
+				"url"	:	{ "path" : "http://data.agroportal.lirmm.fr/ontologies?apikey=<apikey>&format=json&pagesize=500", "type" : "static"},
+				"next"	:	{ "path" : "links.nextPage",	"type" : "literal" },
+				"list"	:	{ "path" : "$",			"type" : "list"},
+				"fields"	:	{
+					"ontoiri"	:	{ "path" : "@id",		"type" : "literal"},
+					"ontoprefix"	:	{ "path" : "acronym",		"type" : "literal"},
+					"ontoname"	:	{ "path" : "name",		"type" : "literal"}
+				},
+				"extra"	:	[
+					{
+						"url"		:       { "path" : "http://data.agroportal.lirmm.fr/ontologies/<ontoprefix>/latest_submission?apikey=<apikey>&format=json" , "type" : "static"},
+						"fields"	:	{
+							"ontoversion"	:	{ "path" : "version",			"type" : "literal"},
+							"ontovdate"	:	{ "path" : "released",			"type" : "literal"},
+							"ontoformat"	:	{ "path" : "hasOntologyLanguage",	"type" : "literal"}
+						}
+					}	
+				],
+				"resources" : [ 
+					{
+						"level"		:	{ "path" : "classes",        "type" : "static"},
+						"url" 		:	{ "path" : "http://data.agroportal.lirmm.fr/ontologies/<ontoprefix>/classes?apikey=<apikey>&format=json&pagesize=1000", "type" : "static"},
+						"next"		:	{ "path" : "links.nextPage",	"type" : "literal"},
+						"list"		:	{ "path" : "collection",	"type" : "list"},
+						"fields"	:	{
+							"termid"	:	{ "path" : "@id",		"type" : "literal"},
+							"label"		:	{ "path" : "prefLabel",		"type" : "literal"},
+							"description"	:	{ "path" : "definition",	"type" : "list"},
+							"synonyms"	:	{ "path" : "synonym",		"type" : "list"},
+							"obsolete"	:	{ "path" : "obsolete",		"type" : "literal"},
+							"shortform"	:	{ "path" : "cui",	"type" : "literal"}
+						}
+					},
+					{
+						"level"		:	{ "path" : "instances",        "type" : "static"},
+						"url" 		:	{ "path" : "http://data.agroportal.lirmm.fr/ontologies/<ontoprefix>/instances?apikey=<apikey>&format=json&pagesize=1000", "type" : "static"},
+						"next"		:	{ "path" : "links.nextPage",	"type" : "literal"},
+						"list"		:	{ "path" : "collection",	"type" : "list"},
+						"fields"	:	{
+							"termid"	:	{ "path" : "id",		"type" : "literal"},
+							"label"		:	{ "path" : "properties.['http://data.agroportal.lirmm.fr/metadata/def/prefLabel', 'http://www.w3.org/2004/02/skos/core#prefLabel']",	"type" : "list"},
+							"synonyms"	:	{ "path" : "properties.['http://www.w3.org/2004/02/skos/core#altLabel']",	"type" : "list"},
+							"description"	:	{ "path" : "properties.['http://purl.obolibrary.org/obo/IAO_0000115','http://www.w3.org/2004/02/skos/core#scopeNote', 'http://www.w3.org/2004/02/skos/core#definition', 'http://www.w3.org/2004/02/skos/core#editorialNote']", "type" : "list"}
+						}
+					}
+				]
+			}
+		]	
+	}
+]
+}
