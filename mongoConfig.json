@@ -1,0 +1,11 @@
+{
+	"exthost"	:	"84.88.53.220",
+	"host"		:	"127.0.0.1",
+	"port"		:	27017,
+	"db"		:	"EUDAT_OLS",
+	"registry"	:	"repositoriesHarvest",
+	"classes"	:	"termcollection",
+	"classes_old"	:	"oldtermcollection",
+	"instances"	:	"instancecollection",
+	"instances_old"	:	"oldinstancecollection"
+}
