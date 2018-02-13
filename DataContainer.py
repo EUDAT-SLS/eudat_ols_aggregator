@@ -128,7 +128,8 @@ class DataContainer:
 			logging.warning("Extra without URL. " +  self.infostr )
 		else:
 			response = self.download(self.checkReplace(extra["url"]["path"], outdata))
-	
+		if response:
+			logging.debug("Got extra info from" +  self.checkReplace(extra["url"]["path"], outdata))	
 		if "fields" in extra:
 			for field in extra["fields"]: 
 				self.parseField(field, extra["fields"], response, outdata)
@@ -276,6 +277,8 @@ class DataContainer:
 						continue
 
 				self.indata["type"]=res["level"]["path"]
+
+				#TODO: not optimal solution: eg. type:instances appears after type:classes in logfile
 				self.infostr=self.infostr+"|type:"+self.indata["type"]
 
 				if "RESUME" in DataContainer.optionsrec:
@@ -284,6 +287,7 @@ class DataContainer:
 						existing=False
 						if DataContainer.dbrec != None:
 							reddict=dict((k,v) for k,v in self.indata.iteritems() if v is not None)
+							logging.debug("Looking for existing resource " + repr(reddict))
 							existing=DataContainer.dbrec.findOne(reddict,
 											     res["level"]["path"])
 						if existing:
