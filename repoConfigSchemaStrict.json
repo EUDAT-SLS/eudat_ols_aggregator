@@ -1,0 +1,97 @@
+{
+"$schema": "http://json-schema.org/schema#",
+ "id": "http://pcgeograph/repoConfigSchema.json",
+	"title" : "Remote resources",
+	"type"	: "object",
+	"properties"	: {
+		"resources": {
+			"title" : "The resource array",
+			"type"	: "array",
+			"items": {
+				"title"	: "Resource",
+				"type"  : "object",
+				"allOf"	: [
+					{ "$ref": "#/definitions/resource" }
+				]
+			}
+		}
+	},
+
+	"definitions": {
+		"resource":	{
+			"title"	: "A single resource",	
+			"type"	: "object",
+			"properties"	:	{
+				"level"	 : { "$ref": "#/definitions/field" },
+				"_comment" : { "type" : "string" },
+				"url"	: { "$ref": "#/definitions/field" },
+				"next"	: { "$ref": "#/definitions/field" },
+				"list"	: { "$ref": "#/definitions/field" },
+				"config" : {
+					"type"	:	"object",
+					"properties" : {
+						"apikey" : { "$ref": "#/definitions/field" }
+					},
+					"additionalProperties" : false
+				},
+				"fields" : { "$ref": "#/definitions/fields" },
+				"extra"	: { 
+					"type"	:	"array",
+					"items" : {
+						"type"	:	"object",
+						"properties" : {
+							"url" : { "$ref": "#/definitions/field" },
+							"fields" : { "$ref": "#/definitions/fields" }
+						},
+						"required": ["url", "fields"],
+						"additionalProperties" : false
+					}
+				},
+				"resources": {
+					"title" : "The resource array",
+					"type"  : "array",
+					"items": {
+						"title"	: "Resource",
+						"type"  : "object",
+						"allOf"	: [
+							{ "$ref": "#/definitions/resource" }
+						]
+					}
+				},
+				"dependencies" : {
+					"next" : ["url"],
+					"list" : ["url"]
+				}
+			},
+			"additionalProperties" : false
+		},
+		"field": {
+			"type"	:	"object",
+			"properties"	:	{
+				"path"	:	{ "type" : "string" }, 
+				"type"	:	{ "enum" : [ "static", "literal", "list" ] } 
+			},
+			"additionalProperties" : false,
+			"required": [ "path", "type" ]
+		},
+		"fields": {
+			"type"	:	"object",
+			"properties" : {
+				"reponame"	: { "$ref": "#/definitions/field" },
+				"ontoiri"	: { "$ref": "#/definitions/field" },
+				"ontoprefix"	: { "$ref": "#/definitions/field" },
+				"ontoname"	: { "$ref": "#/definitions/field" },
+				"ontoformat"	: { "$ref": "#/definitions/field" },
+				"ontoversion"	: { "$ref": "#/definitions/field" },
+				"ontovdate"	: { "$ref": "#/definitions/field" },
+				"obsolete"	: { "$ref": "#/definitions/field" },
+				"termid"	: { "$ref": "#/definitions/field" },
+				"label"		: { "$ref": "#/definitions/field" },
+				"description"	: { "$ref": "#/definitions/field" },
+				"synonyms"	: { "$ref": "#/definitions/field" },
+				"shortform"	: { "$ref": "#/definitions/field" }
+			},
+			"additionalProperties" : false
+		}
+	}
+}

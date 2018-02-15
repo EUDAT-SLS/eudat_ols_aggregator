@@ -14,8 +14,10 @@ from pymongo import MongoClient
 def processConfig(confData, mandatory, optionsrec, databaserec):
 	## TODO: DETERMINE THE KEYS PRESENT IN THE FIELDS
 	out=dict()
+	fieldnames=list()
 	for a in parse("$..fields").find(confData):
 		for k in a.value:
+			fieldnames.append(k)
 			if k not in out:
 				out[k]=None	
 	#for k in allfields:
@@ -25,10 +27,10 @@ def processConfig(confData, mandatory, optionsrec, databaserec):
 	outfile=None
 	if "WRITEFILE" in optionsrec:
 		outfile=codecs.open(optionsrec["WRITEFILE"], "w", "utf-8")
-	if "CALLGRAPHFILE" in optionsrec:
-		callgraphfile=codecs.open(optionsrec["WRITEFILE"], "w", "utf-8")
+	#if "CALLGRAPHFILE" in optionsrec:
+	#	callgraphfile=codecs.open(optionsrec["WRITEFILE"], "w", "utf-8")
 
-	obj=DataContainer(res, out, mandatory, optionsrec, databaserec)
+	obj=DataContainer(res, out, fieldnames, mandatory, optionsrec, databaserec)
 	obj.process()
 
 #################### MAIN BLOCK #############################
@@ -54,19 +56,22 @@ parser.add_option("-w", "--writefile", dest="writefile",
 #parser.add_option("-d", "--debug", dest="debug", help="Set debug level (logging.info,.debug,.warning,.error,.critical)", metavar="DEBUGLEVEL")
 
 #Done
-parser.add_option("-o", "--only", dest="only",
-                  help="Focus on resource with specific field value supplied via -f, mutually exclusive with -s", metavar="STRING")
+parser.add_option("-o", "--only", dest="only", action="append",
+                  help="Focus on resource identified via supplied field name, the respective value(s) supplied via -O. Example for harvesting one repo only: -o'reponame' -O'EBI-OLS'", metavar="STRING")
+
+parser.add_option("-O", "--onlyfields", dest="onlyfields", action="append",
+                  help="field value(s) for field name supplied via -o", metavar="STRING(,STRING)*")
 
 #Done
-parser.add_option("-s", "--skip", dest="skip",
-                  help="Skip resource with specific field value suppied via -f, mutually exclusive with -o", metavar="STRING")
+parser.add_option("-s", "--skip", dest="skip", action="append",
+                  help="Skip resource identified via supplied field name, the respective value(s) must be supplied via -S. Example for ignoring one specific repo: -s'reponame' -S'EBI-OLS'", metavar="STRING")
 
+parser.add_option("-S", "--skipfields", dest="skipfields", action="append",
+                  help="field value(s) for field name supplied via -s", metavar="STRING(,STRING)*")
 #Done
-parser.add_option("-f", "--field", dest="field",
-                  help="field name for -o od -s", metavar="STRING")
 
 parser.add_option("-i", "--ignore", dest="ignore",
-                  help="Ignore specific config sections, i.e. terms, instances, etc", metavar="STRING")
+                  help="Ignore specific config sections, i.e. terms, instances, etc", metavar="STRING(,STRING)*")
 
 #Done
 parser.add_option("-F", "--first", dest="first",
@@ -76,9 +81,9 @@ parser.add_option("-F", "--first", dest="first",
 parser.add_option("-R", "--resume", action="store_true", dest="resume",
                   help="Only download resources not already in DB")
 
-#Done
-parser.add_option("-g", "--callgraph", dest="callgraph",
-                  help="write callgraph to file", metavar="FILE")
+##Done
+#parser.add_option("-g", "--callgraph", dest="callgraph",
+#                  help="write callgraph to file", metavar="FILE")
 
 parser.add_option("-l", "--loglevel", dest="loglevel",
                   help="Specify log level (INFO, DEBUG) default(logging.WARNING)", metavar="STRING")
@@ -111,25 +116,52 @@ if options.configfile != None or options.mongodb != None:
 	# Done
         SKIP=None
         if options.skip != None:
-		if options.field==None or options.only != None:
+		onlycollision=False
+		if options.only != None:
+			for only in options.only:
+				if only in options.skip:
+					print "collision between " + only + " and " + repr (options.skip)
+					onlycollision=True
+		if options.skipfields==None or onlycollision or len(options.skip)!=len(options.skipfields):
 			parser.print_help()
-		else:	
-                	optionsrec["SKIP"]=options.skip
-                	optionsrec["FIELD"]=options.field
+			exit(1)
+		else:
+			optionsrec["SKIP"]=dict()
+			for i in range(0,len(options.skip)):
+				#check if field is list
+				fieldlist=map(str.strip, options.skipfields[i].split(","))
+				if options.skip[i] not in optionsrec["SKIP"]:
+					optionsrec["SKIP"][options.skip[i]]=list()
+				optionsrec["SKIP"][options.skip[i]].extend(fieldlist)
+			print repr(optionsrec["SKIP"])
+
     
 	#Done 
 	INCLUDE=None
         if options.only != None:
-		if options.field==None or options.skip != None:
+		skipcollision=False
+		if options.skip != None:
+			for skip in options.skip:
+				if skip in options.only:
+					print "collision between " + skip + " and " + repr (options.only)
+					skipcollision=True
+		if options.onlyfields==None or skipcollision or len(options.only)!=len(options.onlyfields):
 			parser.print_help()
+			exit(1)
 		else:	
-                	optionsrec["INCLUDE"]=options.only
-                	optionsrec["FIELD"]=options.field
+			optionsrec["INCLUDE"]=dict()
+			for i in range(0,len(options.only)):
+				#check if field is list
+				fieldlist=map(str.strip, options.onlyfields[i].split(","))
+				if options.only[i] not in optionsrec["INCLUDE"]:
+					optionsrec["INCLUDE"][options.only[i]]=list()
+				optionsrec["INCLUDE"][options.only[i]].extend(fieldlist)
+			print repr(optionsrec["INCLUDE"])
 
 	# Done
 	IGNORE=None
-	if options.ignore != None:
-		optionsrec["IGNORE"]=options.ignore
+	if options.ignore != None:		
+		optionsrec["IGNORE"]=map(str.strip, options.ignore.split(","))
 
 	#### WRITE TO FILE ####
 
@@ -138,10 +170,10 @@ if options.configfile != None or options.mongodb != None:
 	if options.writefile != None:
 		optionsrec["WRITEFILE"]=options.writefile
 
-	#Done 
-	CALLGRAPHFILE=None
-	if options.callgraph != None:
-		optionsrec["CALLGRAPHFILE"]=options.callgraph
+#	#Done 
+#	CALLGRAPHFILE=None
+#	if options.callgraph != None:
+#		optionsrec["CALLGRAPHFILE"]=options.callgraph
 
 	#### DB RELATED STUFF ###
         RESUME=False
@@ -194,6 +226,8 @@ if options.configfile != None or options.mongodb != None:
         #print repr(confData)
 
 
+	#just a test
+	#exit(0)
 
         processConfig(confData, mandatory, optionsrec, databaserec)
 

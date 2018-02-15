@@ -99,7 +99,7 @@ class MongoConnector:
 				#new version detected, write old one to oldterms
 				#redo -> maintain dictionary document with _id as key and dict as value, 
 				#	 containing harvestdate:{fields} k,v pairs
-				t_id_old = self.collections[outrec["type"]+"_old"].update({ "_id": existing["_id"] },{ "$push" : { "version" : dict((i,d[i]) for i in existing if i!='_id') }}, upsert=True).inserted_id
+				t_id_old = self.collections[outrec["type"]+"_old"].update({ "_id": existing["_id"] },{ "$push" : { "version" : dict((i,existing[i]) for i in existing if i!='_id') }}, upsert=True)
 				#t_id_old = self.collections[outrec["type"]+"_old"].insert_one(existing).inserted_id
 				self.collections[outrec["type"]].delete_one({"_id": existing["_id"]})
 				t_id = self.collections[outrec["type"]].insert_one(outrec).inserted_id

@@ -1,2 +1,5 @@
 repoConfig3.json
 *.pyc
+*.txt
+unuzed/*
+*.log

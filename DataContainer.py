@@ -28,6 +28,7 @@ import traceback
 class DataContainer:
 
 	dbrec		=	None
+	fieldnames	=	None
 	mandatory	=	None
 	optionsrec	=	None
 	outputfile	=	None
@@ -37,13 +38,15 @@ class DataContainer:
 	oldlvl=""
 	accum=1
 	
-	def __init__(self, config, data, mandatory=None, optionsrec=None, dbrec=None, level=-1):
+	def __init__(self, config, data, fieldnames=None, mandatory=None, optionsrec=None, dbrec=None, level=-1):
 		self.config=config
 		self.indata=data
 		self.linecount=0
 		self.parseTab=dict()
 		self.level=level+1
 
+		if fieldnames:
+			DataContainer.fieldnames=fieldnames
 		if mandatory:
 			DataContainer.mandatory=mandatory
 		if optionsrec:
@@ -159,19 +162,22 @@ class DataContainer:
 		hit = False
 		# SKIP/INCLUDE CHECKS
 		if "SKIP" in DataContainer.optionsrec:
-			if DataContainer.optionsrec["SKIP"] in outdata:
-				if outdata[DataContainer.optionsrec["SKIP"]]:
-					if outdata[DataContainer.optionsrec["SKIP"]]==DataContainer.optionsrec["FIELD"]:
-						hit=True
-						logging.debug("SKIP" + DataContainer.optionsrec["SKIP"] + " " + \
-								DataContainer.optionsrec["FIELD"])
+			for skipfield in DataContainer.optionsrec["SKIP"]:
+				if skipfield in outdata:
+					if outdata[skipfield]:
+						if outdata[skipfield] in DataContainer.optionsrec["SKIP"][skipfield]:
+							hit=True
+							logging.debug("SKIP " + skipfield + " with val " + outdata[skipfield])
+
 		if "INCLUDE" in DataContainer.optionsrec:
-			if DataContainer.optionsrec["INCLUDE"] in outdata:
-				if outdata[DataContainer.optionsrec["INCLUDE"]]:
-					if outdata[DataContainer.optionsrec["INCLUDE"]]!=DataContainer.optionsrec["FIELD"]:
-						logging.debug("IGNORE" + DataContainer.optionsrec["INCLUDE"] + " " + \
-							outdata[DataContainer.optionsrec["INCLUDE"]])
-						hit=True
+			for includefield in DataContainer.optionsrec["INCLUDE"]:
+				if includefield in outdata:
+					if outdata[includefield]:
+						if outdata[includefield] not in DataContainer.optionsrec["INCLUDE"][includefield]:
+							hit=True
+						if hit:
+							logging.debug("IGNORE " + outdata[includefield] + " because not in Include list.")
+		
 		return hit
 
 	def initProcessDataContainer(self, what, outdata, level):
@@ -221,7 +227,8 @@ class DataContainer:
 		while url:
 
 			myt=time.time()
-			response=self.download(self.checkReplace(url, self.indata))
+			download_url=self.checkReplace(url, self.indata)
+			response=self.download(download_url)
 			logging.debug("Downloading took " + str(int(time.time()-myt)) + " sec ")
 	
 			objlist=None
@@ -243,9 +250,11 @@ class DataContainer:
 				self.processObject(res, outdata, obj)
 	
 			if len(objlist)==0:
+				logging.warning("Got empty result set for url" + "\t" + download_url +"\t" +  self.infostr)
 				self.zeroResCount+=1
 	
 			if self.zeroResCount==5:
+				logging.warning("Got " + str(self.zeroResCount) + " empty results in series, aborting." +  self.infostr)
 				return
 	
 			url = None
@@ -272,7 +281,7 @@ class DataContainer:
 			if "level" in res:
 				#Check IGNORE option
 				if "IGNORE" in DataContainer.optionsrec:
-					if res["level"]["path"]==DataContainer.optionsrec["IGNORE"]:
+					if res["level"]["path"] in DataContainer.optionsrec["IGNORE"]:
 						logging.debug("IGNORING LEVEL " + res["level"]["path"])
 						continue
 
@@ -286,8 +295,12 @@ class DataContainer:
 					if not "resources" in res:
 						existing=False
 						if DataContainer.dbrec != None:
-							reddict=dict((k,v) for k,v in self.indata.iteritems() if v is not None)
+							reddict=dict((k,v) for k,v in self.indata.iteritems() if k in DataContainer.fieldnames and v is not None)
 							logging.debug("Looking for existing resource " + repr(reddict))
+							#try:
+							#	key=raw_input("ENTER KEY :")
+							#except:
+							#	pass
 							existing=DataContainer.dbrec.findOne(reddict,
 											     res["level"]["path"])
 						if existing:
