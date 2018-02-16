@@ -17,6 +17,8 @@ This is a prototypical implementation for a service which harvests information a
 
         Online repository for uploading, discovering and retrieving semantic resources.
 
+* Implementation
+
 
 
 Harvesting of Semantic Repositories
