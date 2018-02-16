@@ -4,7 +4,7 @@ Harvesting of Semantic Repositories
 
 * Files:
 
-- Configuration:
+    * Configuration:
 
 [repoConfig_noapikey.json](repoConfig_noapikey.json) - Example configuration for three Semantic Repositories EBI-OLS, Bioportal and Agroportal. For the latter two, API keys must be obtained for each and inserted into the respective fields in the json file.
 
@@ -12,7 +12,7 @@ Harvesting of Semantic Repositories
 
 [mandatory.json](mandatory.json) - Specify which fields must be present for a term to be stored into the DB.
 
-- Code
+    * Code
 
 [DataContainer.py](DataContainer.py) - Class for handling Semantic Repository descriptions as shown in [(repoConfig_noapikey.json](repoConfig_noapikey.json).
 
