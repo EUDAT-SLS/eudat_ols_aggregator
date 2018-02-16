@@ -1,6 +1,6 @@
 # EUDAT Semantic Lookup Service Harvester
 
-This is a prototypical implementation for a service which harvests information about semantic concepts from semantic resources hosted via dedicated repositories. The main goal is to enable interdisciplinary annotation of data with controlled terminology via services such as [EUDAT B2Note](https://github.com/EUDAT-B2NOTE/b2note).
+This is a prototypical implementation for a service which harvests information about semantic concepts from semantic resources hosted via dedicated repositories. The main goal within EUDAT is to enable interdisciplinary annotation of data with controlled terminology via services such as [EUDAT B2Note](https://github.com/EUDAT-B2NOTE/b2note). For a broader description of the approach see [Goldfarb & Le Franc, 2017](http://ceur-ws.org/Vol-1933/paper-7.pdf)
 
 * Definitions
 
