@@ -5,11 +5,14 @@ This is a prototypical implementation for a service which harvests information a
 * Definitions
 
 
-    * > Semantic concept: Classes, individuals, concepts or terms serving as building blocks for knowledge organization systems such as ontologies, thesauri or controlled vocabularies. A main requirement is that these entities are identified via a unique ID, usually provided in form of a URI, and should have a clear definition of their meaning.
+    * Semantic concept: 
+    Classes, individuals, concepts or terms serving as building blocks for knowledge organization systems such as ontologies, thesauri or controlled vocabularies. A main requirement is that these entities are identified via a unique ID, usually provided in form of a URI, and should have a clear definition of their meaning.
 
-    * > Semantic resource: A collection of Semantic concepts and potential relationships between them, formalized as controlled vocabulary, thesaurus or ontology.
+    * Semantic resource: 
+    A collection of Semantic concepts and potential relationships between them, formalized as controlled vocabulary, thesaurus or ontology.
 
-    * > Semantic repository: Online repository for uploading, discovering and retrieving semantic resources.
+    * Semantic repository: 
+    Online repository for uploading, discovering and retrieving semantic resources.
 
 
 
