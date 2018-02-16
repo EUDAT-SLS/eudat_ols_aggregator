@@ -23,6 +23,8 @@ Harvesting of Semantic Repositories
 
 ##########################
 
-(c) 2018, Doron Goldfarb, Environment Agency Austria, contact: doron.goldfarb@umweltbundesamt.at
+Created by Doron Goldfarb, contact: doron.goldfarb@umweltbundesamt.at
+(c) 2018, Environment Agency Austria
+
 
 This work was funded by the European Union via the EUDAT2020 project under grant agreement n.654065
