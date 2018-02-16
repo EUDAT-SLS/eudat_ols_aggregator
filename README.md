@@ -6,7 +6,7 @@ Harvesting of Semantic Repositories
 
 ### Configuration:
 
-[(repoConfig_noapikey.json](repoConfig_noapikey.json) - Example configuration for three Semantic Repositories EBI-OLS, Bioportal and Agroportal. For the latter two, API keys must be obtained for each and inserted into the respective fields in the json file.
+[repoConfig_noapikey.json](repoConfig_noapikey.json) - Example configuration for three Semantic Repositories EBI-OLS, Bioportal and Agroportal. For the latter two, API keys must be obtained for each and inserted into the respective fields in the json file.
 
 [mongoConfig.json](mongoConfig.json) - Specify host and port of used MongoDB instance, collections for repositories, classes and instances
 
@@ -24,6 +24,7 @@ Harvesting of Semantic Repositories
 ##########################
 
 Created by Doron Goldfarb, contact: doron.goldfarb@umweltbundesamt.at
+
 (c) 2018, Environment Agency Austria
 
 
