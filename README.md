@@ -2,7 +2,49 @@
 
 # This documentation is work in progress
 
-This is a prototypical implementation for a service which harvests information about semantic concepts from semantic resources hosted via dedicated repositories. The main goal within EUDAT is to enable interdisciplinary annotation of data with controlled terminology via services such as [EUDAT B2Note](https://github.com/EUDAT-B2NOTE/b2note). For a broader description of the approach see [(Goldfarb & Le Franc, 2017)](http://ceur-ws.org/Vol-1933/paper-7.pdf)
+# Quickstart
+
+* Files:
+
+    * Configuration:
+
+      [repoConfig_noapikey.json](repoConfig_noapikey.json) - Example configuration for three Semantic Repositories EBI-OLS, Bioportal and Agroportal. For the latter two, API keys must be obtained for each and inserted into the respective <YOUR XXXPORTAL API KEY HERE> fields in the json file.
+
+      [mongoConfig.json](mongoConfig.json) - Specify host and port of used MongoDB instance, collections for repositories, classes and instances
+
+      [mandatory.json](mandatory.json) - Specify which fields must be present for a term to be stored into the DB.
+
+    * Code
+
+      [DataContainer.py](DataContainer.py) - Class for handling Semantic Repository descriptions as shown in [(repoConfig_noapikey.json](repoConfig_noapikey.json).
+
+      [MongoConnector.py](MongoConnector.py) - Class for storing terms harvested via [DataContainer.py](DataContainer.py) to MongoDB instance specified via [mongoConfig.json](mongoConfig.json). An instance of this class must be passed to the root DataContainer instance and is reused there.
+
+      [retrieve.py](retrieve.py) - Script for harvesting terms from repositories using the above configuration files and [DataContainer.py](DataContainer.py)
+
+* Requirements:
+
+    * MongoDB:
+
+      A running MongoDB installation is required, its adress etc. should be configured in [mongoConfig.json](mongoConfig.json). A dedicated database with four collections must be explicitely created. There are two pairs of collections, one for classes, one for instances. Each pair consists of one collection for "current" classes/instances and one for "old" ones. In each harvesting run, classes/instances with changed data are moved to the "old" collection and overwritten in the "current" one. The default configuration in [mongoConfig.json](mongoConfig.json) assumes the following: A database EUDAT_OLS with collections for classes: "termcollection" and "oldtermcollection" and instances: "instancecollection" and "oldinstancecollection"
+
+    * Repository configuration:
+
+      The list of configured repositories can be passed as file such as in [repoConfig_noapikey.json](repoConfig_noapikey.json) or stored in the MongoDB in a dedicated collection, which can also be specified via [mongoConfig.json](mongoConfig.json)
+
+    * System configuration:
+
+      It is highly advisable to have sufficient RAM available on the machine running the harvester, EBI-OLS, Bioportal and Agroportal together yield about 15M classes/instances.
+
+* Invocation
+
+    If the repository configuration shall be passed as file:
+
+    ./retrieve.py -c repoConfig.json -m mandatory.json -M mongoConfig.json   
+
+# Documentation
+
+This is a prototypical implementation for a service which harvests information about semantic concepts from semantic resources hosted via dedicated repositories. The main purpose for this service within EUDAT is to support interdisciplinary annotation of data by providing controlled terminology to services such as [EUDAT B2Note](https://github.com/EUDAT-B2NOTE/b2note). For a broader description of the approach see [(Goldfarb & Le Franc, 2017)](http://ceur-ws.org/Vol-1933/paper-7.pdf)
 
 * Definitions
 
@@ -31,23 +73,6 @@ This is a prototypical implementation for a service which harvests information a
 
 Harvesting of Semantic Repositories
 
-* Files:
-
-    * Configuration:
-
-      [repoConfig_noapikey.json](repoConfig_noapikey.json) - Example configuration for three Semantic Repositories EBI-OLS, Bioportal and Agroportal. For the latter two, API keys must be obtained for each and inserted into the respective <YOUR XXXPORTAL API KEY HERE> fields in the json file.
-
-      [mongoConfig.json](mongoConfig.json) - Specify host and port of used MongoDB instance, collections for repositories, classes and instances
-
-      [mandatory.json](mandatory.json) - Specify which fields must be present for a term to be stored into the DB.
-
-    * Code
-
-      [DataContainer.py](DataContainer.py) - Class for handling Semantic Repository descriptions as shown in [(repoConfig_noapikey.json](repoConfig_noapikey.json).
-
-      [MongoConnector.py](MongoConnector.py) - Class for storing terms harvested via [DataContainer.py](DataContainer.py) to MongoDB instance specified via [mongoConfig.json](mongoConfig.json). An instance of this class must be passed to the root DataContainer instance and is reused there.
-
-      [retrieve.py](retrieve.py) - Script for harvesting terms from repositories using the above configuration files and [DataContainer.py](DataContainer.py)
 
 
 References:
