@@ -32,11 +32,11 @@ The content of the db can subsequently be fed into a Solr index which can be use
 
       the [solr directory](solr) contains various items for creating the Solr index.
 
-        * The script [solr_writer.py]()solr/solr_writer.py) should be used for populating a Solr core with information from the database. 
+        * The script [solr_writer.py](solr/solr_writer.py) should be used for populating a Solr core with information from the database. 
 
-        * The subdirectory [solr/core_config](solr/core_config) provides the respective configuration files based on a Solr 5.5.3 installation. The [schema.xml](solr/core_config/conf/schema.xml) file and the associated stopword lists are modified/reused from the Solr configuration provided by [EBI-OLS](https://github.com/EBISPOT/OLS/tree/master/ols-solr/src/main/solr-5-config/ontology/conf)
+        * The subdirectory [core_config](solr/core_config) provides the respective configuration files based on a Solr 5.5.3 installation. The [core_config/conf/schema.xml](solr/core_config/conf/schema.xml) file and the associated stopword lists are modified/reused from the Solr configuration provided by [EBI-OLS](https://github.com/EBISPOT/OLS/tree/master/ols-solr/src/main/solr-5-config/ontology/conf)
 
-        *  The subdirectory [solr/core_config/conf/velocity](solr/core_config/conf/velocity) contains Velocity templates for rendering the faceted view prototype.
+        *  The subdirectory [core_config/conf/velocity](solr/core_config/conf/velocity) contains Velocity templates for rendering the faceted view prototype.
 
 * Requirements:
 
