@@ -4,15 +4,15 @@
 
 This is a prototypical implementation for a service which harvests information about semantic concepts from semantic resources hosted via dedicated repositories. The main purpose for this service within EUDAT is to support interdisciplinary annotation of data by providing controlled terminology to services such as [EUDAT B2Note](https://github.com/EUDAT-B2NOTE/b2note). For a broader description of the approach see [(Goldfarb & Le Franc, 2017)](http://ceur-ws.org/Vol-1933/paper-7.pdf)
 
-The service basically consists of a script which consumes a configuration file describing the locations and APIs of Semantic repositories (Currently: BioPortal, AgroPortal and EBI-OLS) in order to harvest the information about the semantic resources and concepts hosted there. The resulting data is written into a databae (Currently: MongoDB) in unified form, mainly consisting of concept ID, preferred label, synonyms, description as well as resource and repository level information.
+The service basically consists of a script which consumes a configuration file describing the locations and APIs of Semantic repositories (Currently: BioPortal, AgroPortal and EBI-OLS) in order to harvest the information about the semantic resources and concepts hosted there. The resulting data is written into a database (Currently: MongoDB) in unified form, mainly consisting of concept ID, preferred label, synonyms, description as well as resource and repository level information.
 
 The content of the db can subsequently be fed into a Solr index which can be used for various lookup services. A faceted search preview for the results of the harvesting of BioPortal, AgroPortal and EBI-OLS can be explored at https://bsceudatwp8.bsc.es/termbrowser
 
 # Quickstart
 
-* Files:
+* **Files**:
 
-    * Configuration:
+    * **Configuration:**
 
       [repoConfig_noapikey.json](repoConfig_noapikey.json) - Example configuration for three Semantic Repositories EBI-OLS, Bioportal and Agroportal. For the latter two, API keys must be obtained for each and inserted into the respective <YOUR XXXPORTAL API KEY HERE> fields in the json file.
 
@@ -20,7 +20,7 @@ The content of the db can subsequently be fed into a Solr index which can be use
 
       [mandatory.json](mandatory.json) - Specify which fields must be present for a term to be stored into the DB.
 
-    * Code
+    * **Code:**
 
       [DataContainer.py](DataContainer.py) - Class for handling Semantic Repository descriptions as shown in [(repoConfig_noapikey.json](repoConfig_noapikey.json).
 
@@ -28,7 +28,7 @@ The content of the db can subsequently be fed into a Solr index which can be use
 
       [retrieve.py](retrieve.py) - Script for harvesting terms from repositories using the above configuration files and [DataContainer.py](DataContainer.py)
 
-    * Solr related
+    * **Solr related:**
 
       the [solr directory](solr) contains various items for creating the Solr index.
 
@@ -38,21 +38,21 @@ The content of the db can subsequently be fed into a Solr index which can be use
 
         *  The subdirectory [core_config/conf/velocity](solr/core_config/conf/velocity) contains Velocity templates for rendering the faceted view prototype.
 
-* Requirements:
+* **Requirements:**
 
-    * MongoDB:
+    * **MongoDB:**
 
       A running MongoDB installation is required, its adress etc. should be configured in [mongoConfig.json](mongoConfig.json). A dedicated database with four collections must be explicitely created. There are two pairs of collections, one for classes, one for instances. Each pair consists of one collection for "current" classes/instances and one for "old" ones. In each harvesting run, classes/instances with changed data are moved to the "old" collection and overwritten in the "current" one. The default configuration in [mongoConfig.json](mongoConfig.json) assumes the following: A database EUDAT_OLS with collections for classes: "termcollection" and "oldtermcollection" and instances: "instancecollection" and "oldinstancecollection"
 
-    * Repository configuration:
+    * **Repository configuration:**
 
       The list of configured repositories can be passed as file such as in [repoConfig_noapikey.json](repoConfig_noapikey.json) or stored in the MongoDB in a dedicated collection, which can also be specified via [mongoConfig.json](mongoConfig.json)
 
-    * System configuration:
+    * **System configuration:**
 
       It is highly advisable to have sufficient RAM available on the machine running the harvester, EBI-OLS, Bioportal and Agroportal together yield about 15M classes/instances.
 
-* Invocation
+* **Invocation**
 
     If the repository configuration shall be passed as file:
 
