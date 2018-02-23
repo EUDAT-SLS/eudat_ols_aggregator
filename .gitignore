@@ -1,7 +1,8 @@
-repoConfig3.json
 *.pyc
 *.txt
-unuzed/*
 *.log
+*.swp
+repoConfig3.json
 DataAnalyzer.py
 aligner.py
+unuzed/*

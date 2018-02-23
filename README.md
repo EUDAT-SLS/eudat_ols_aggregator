@@ -2,6 +2,12 @@
 
 # This documentation is work in progress
 
+This is a prototypical implementation for a service which harvests information about semantic concepts from semantic resources hosted via dedicated repositories. The main purpose for this service within EUDAT is to support interdisciplinary annotation of data by providing controlled terminology to services such as [EUDAT B2Note](https://github.com/EUDAT-B2NOTE/b2note). For a broader description of the approach see [(Goldfarb & Le Franc, 2017)](http://ceur-ws.org/Vol-1933/paper-7.pdf)
+
+The service basically consists of a script which consumes a configuration file describing the locations and APIs of Semantic repositories (Currently: BioPortal, AgroPortal and EBI-OLS) in order to harvest the information about the semantic resources and concepts hosted there. The resulting data is written into a databae (Currently: MongoDB) in unified form, mainly consisting of concept ID, preferred label, synonyms, description as well as resource and repository level information.
+
+The content of the db can subsequently be fed into a Solr index which can be used for various lookup services. A faceted search preview for the results of the harvesting of BioPortal, AgroPortal and EBI-OLS can be explored at https://bsceudatwp8.bsc.es/termbrowser
+
 # Quickstart
 
 * Files:
@@ -21,6 +27,16 @@
       [MongoConnector.py](MongoConnector.py) - Class for storing terms harvested via [DataContainer.py](DataContainer.py) to MongoDB instance specified via [mongoConfig.json](mongoConfig.json). An instance of this class must be passed to the root DataContainer instance and is reused there.
 
       [retrieve.py](retrieve.py) - Script for harvesting terms from repositories using the above configuration files and [DataContainer.py](DataContainer.py)
+
+    * Solr related
+
+      the [solr directory](solr) contains various items for creating the Solr index.
+
+        * The script [solr_writer.py]()solr/solr_writer.py) should be used for populating a Solr core with information from the database. 
+
+        * The subdirectory [solr/core_config](solr/core_config) provides the respective configuration files based on a Solr 5.5.3 installation. The [schema.xml](solr/core_config/conf/schema.xml) file and the associated stopword lists are modified/reused from the Solr configuration provided by [EBI-OLS](https://github.com/EBISPOT/OLS/tree/master/ols-solr/src/main/solr-5-config/ontology/conf)
+
+        *  The subdirectory [solr/core_config/conf/velocity](solr/core_config/conf/velocity) contains Velocity templates for rendering the faceted view prototype.
 
 * Requirements:
 
@@ -44,7 +60,6 @@
 
 # Documentation
 
-This is a prototypical implementation for a service which harvests information about semantic concepts from semantic resources hosted via dedicated repositories. The main purpose for this service within EUDAT is to support interdisciplinary annotation of data by providing controlled terminology to services such as [EUDAT B2Note](https://github.com/EUDAT-B2NOTE/b2note). For a broader description of the approach see [(Goldfarb & Le Franc, 2017)](http://ceur-ws.org/Vol-1933/paper-7.pdf)
 
 * Definitions
 
