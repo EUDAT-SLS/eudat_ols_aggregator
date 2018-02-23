@@ -1,0 +1,40 @@
+#**
+ *  Provides navigation/access to Advanced search options
+ *  Usually displayed near the top of the page
+ *#
+
+##TODO: Make some nice tabs here
+
+#set($queryOpts = $params.get("queryOpts"))
+
+<div class="tabs-bar" #annTitle("Click the link to demonstrate various Solr capabilities")>
+
+  <span>Type of Search:</span>
+
+  ##queryOpts=$queryOpts
+
+  ## return to Simple Search
+  ##set( $selected = ($queryOpts && $queryOpts != "") )
+  #set( $selected = ! $queryOpts )
+  <span class="tab #if($selected)selected#end">
+    #if($selected)
+      Single concepts
+    #else
+      <a href="#url_for_home/?&q=$params.get('q')#debug#annotate">
+        Single concepts</a>
+    #end
+  </span>
+
+
+  ## Group By Field
+  #set( $selected = ($queryOpts == "group") )
+  <span class="tab #if($selected)selected#end">
+    #if($selected)
+      Group By URI
+    #else
+        <a href="#url_for_home?#debug#annotate&queryOpts=group&group=true&group.field=termid&group.limit=1000&q=$params.get('q')">
+        Group by URI</a>
+    #end
+  </span>
+
+</div>

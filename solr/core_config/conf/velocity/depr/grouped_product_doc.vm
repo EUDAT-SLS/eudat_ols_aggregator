@@ -1,0 +1,11 @@
+#**
+ *  Render a hit representing a Product
+ *  assumed to have a field called "name"
+ *#
+<div class="result-title"><b>
+&nbsp;#field('label')</b></div>
+##<div>&nbsp;&nbsp;Id: #field('_id')</div>
+##<div>&nbsp;&nbsp;Label: #field('label')</div>
+<div>&nbsp;&nbsp;Repo: #field('reponame')&nbsp;Onto: #field('ontoprefix')&nbsp;Obsolete: #field('obsolete')</div>
+##<div>&nbsp;&nbsp;Onto: #field('ontoprefix')</div>
+#parse('debug.vm')

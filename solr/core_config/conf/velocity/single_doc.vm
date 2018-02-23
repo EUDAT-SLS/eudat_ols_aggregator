@@ -1,0 +1,48 @@
+#**
+ *  Render a concept in the results list
+ *#
+
+#set($docId = $doc.getFieldValue('id'))
+
+<div class="result-document">
+
+
+#set($url = $doc.getFieldValue('termid'))
+#set($label = $doc.getFieldValue('label'))
+
+## Row 1: Icon and Title and mlt link
+<div class="result-title">
+  ## Title, hyperlinked
+  <a href="${url}" target="_blank">
+    <b> $esc.html($label) </b></a>
+
+
+</div>
+
+## Row 2?: ID / URL
+<div>
+    URL: #field('termid') 
+</div>
+
+## Ontoprefix 
+#if($doc.getFieldValue('ontoprefix'))
+  <div>
+    Resource Prefix: #field('ontoprefix') |&#09;&#09;|	 Name: #field('ontoname')
+  </div>
+#end
+
+## Reponame
+#if($doc.getFieldValue('reponame'))
+  <div>
+    Repository: #field('reponame')
+  </div>
+#end
+
+## Main content of doc
+<div class="result-body">
+  #field('description')
+</div>
+
+#parse('debug.vm')
+
+</div>

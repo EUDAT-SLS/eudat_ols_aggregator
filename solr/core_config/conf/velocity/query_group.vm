@@ -1,0 +1,52 @@
+#**
+ *  Query settings for grouping by fields,
+ *  e.g.: Manufacturer or Popularity
+ *#
+
+#set($queryOpts = $params.get("queryOpts"))
+
+#if($queryOpts == "group")
+  <div>
+    #set($groupF = $request.params.get('group.field'))
+
+    <label #annTitle("Add the &group.field parameter. Multiselect is supported")>
+      Group By:
+      <select id="group" name="group.field" size="1" multiple="true" selected="termid">
+        ## TODO: Handle multiple selects correctly
+        ## TODO: fix empty / "No Group" selection
+
+        ##<option value=""
+        ##  #if($groupF == '')selected="true"#end
+        ##>
+        ##  No Group
+        ##</option>
+
+        <option value="termid"
+          #if($groupF == 'termid')selected="true"#end
+        >
+          Term ID
+        </option>
+
+       ## <option value="label"
+       ##   #if($groupF == 'label')selected="true"#end
+       ## >
+       ##   Label
+       ##</option>
+
+        ##<option value="ontoprefix"
+        ##  #if($groupF == 'ontoprefix')selected="true"#end
+       ## >
+       ##   Onto Prefix
+      ##  </option>
+
+      </select>
+    </label>
+
+    <input type="hidden" name="group" value="true"/>
+    <input type="hidden" name="group.limit" value="1000"/>
+    <input type="hidden" name="rows" value="100"/>
+    ##<input type="hidden" name="group.limit" value="10"/>
+
+  </div>
+
+#end

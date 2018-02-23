@@ -1,0 +1,95 @@
+#**
+ *  Display grouped results
+ *#
+
+
+<div class="result-document">
+  <div class="result-title">
+    <b>$grouping.key</b>
+  </div>
+
+  <div>
+    Total Matches in Group: $grouping.value.matches
+  </div>
+
+  <div>  ## list of groups
+	
+	#set ($logFactory = $portal.getClass().forName('com.liferay.portal.kernel.log.LogFactoryUtil'))
+	#set ($log = $logFactory.getLog('mylog'))
+
+
+	#set($array=$grouping.value.groups)
+	
+	###### sort
+	### 
+	#set($size=$array.size())
+	#foreach($rec1 in $array) ##Bubble sort takes n^2 passes
+	 #set($actual=-1)##Having trouble with math on $velocityCount -- keeping my own count
+	  #foreach($rec2 in $array)
+	   #set($actual=$actual+1)
+	   #if($velocityCount<$size) ##Preventing bad array access
+	    ##### Compare this and previous
+	    ##### If this is smaller, swap
+	    #if ($rec2.doclist.numFound<$array.get($velocityCount).doclist.numFound)
+	      #set ($tmp=$array.get($velocityCount))
+	      #set ($rec1=$array.set($velocityCount,$rec2))
+	      #set ($rec1=$array.set($actual,$tmp))
+	    #end
+	   #end
+	  #end
+	#end
+
+	#foreach ($group in $grouping.value.groups)
+
+
+
+      ## obsolete elimination test
+      #set($obs1=0)
+      #set($obs2=0)
+      #foreach ($doc in $group.doclist)
+	#if ($doc.getFieldValue('obsolete')=="true")
+		#set($obs1=1)
+		#set($obs2=1)
+	#end
+      #end
+
+      #set($obs1=0)
+      #if($obs1==0)
+      <div class="result-body">	
+      <div class="group-value">
+        #if($group.groupValue)$group.groupValue#{else}<i>No group</i>#end
+        <span #annTitle("The count of the number of documents in this group")>
+          ($group.doclist.numFound)
+        </span>
+	#if($obs2==1)
+        <span #annTitle("The count of the number of documents in this group")>
+          (obsolete)
+        </span>
+	#end
+      </div>
+
+      <div class="group-doclist"
+        #annTitle("Contains the top scoring documents in the group")
+      >
+	#set($repo_onto={})
+	$esc.html($group.doclist[0].getFieldValue('label'))
+	<p/>
+	<div class="group-pack">
+       	#foreach ($doc in $group.doclist)
+	  #set($label=$doc.getFieldValue('label'))
+	  <div class="group-member">
+		<div class="result-title"><b>
+		&nbsp;$esc.html($label)</b></div>
+		<div>&nbsp;&nbsp;Repo: #field('reponame')&nbsp;Onto: #field('ontoprefix')&nbsp;Obsolete: #field('obsolete')</div>
+		#parse('debug.vm')
+	  </div>	
+       	#end
+	</div>
+	</div>
+      </div>
+      #end ##if($obs1==0)
+
+    #end  ## end of foreach group in grouping.value.groups
+  </div>  ## div tag for entire list of groups
+
+</div>  ## end of div class=result-document

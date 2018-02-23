@@ -1,0 +1,13 @@
+
+#Use solr_writer.py to transfer data from mongodb to solr
+
+* Requirements:
+
+    Solr core with schema.xml adjusted to the fields present in the mongo collection
+
+* Usage:
+
+    python solr_writer.py -M mongoConfig.json -c "http://127.0.0.1:8983/solr/termcollection/"
+
+
+

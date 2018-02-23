@@ -1,0 +1,7 @@
+#**
+ *  Provides cynamic spelling suggestions
+ *  as you type in the search form
+ *#
+#foreach($t in $response.response.terms.label_s)
+  $esc.html($t.key)
+#end
