@@ -3,3 +3,5 @@ repoConfig3.json
 *.txt
 unuzed/*
 *.log
+DataAnalyzer.py
+aligner.py
