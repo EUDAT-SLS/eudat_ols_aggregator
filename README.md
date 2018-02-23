@@ -48,6 +48,11 @@ The content of the db can subsequently be fed into a Solr index which can be use
 
       The list of configured repositories can be passed as file such as in [repoConfig_noapikey.json](repoConfig_noapikey.json) or stored in the MongoDB in a dedicated collection, which can also be specified via [mongoConfig.json](mongoConfig.json)
 
+    * **Solr installation:**
+
+    The provided configuration files and Velocity templates were tested on a Solr 5.5.3 installation. They assume a Solr core named "termcollection" and should be put into the respective location (e.g. /var/solr/data/termcollection/...). The Velocity templates require some static files (css, img, js) which are located in the same directory but must be moved to the root solr server directory into a subdirectory called "termbrowser_resources" (e.g. [SOLR_HOME]/server/solr-webapp/webapp/termbrowser_resources/[css|img|js]/*). 
+ 
+
     * **System configuration:**
 
       It is highly advisable to have sufficient RAM available on the machine running the harvester, EBI-OLS, Bioportal and Agroportal together yield about 15M classes/instances.
