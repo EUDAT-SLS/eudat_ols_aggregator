@@ -20,7 +20,7 @@
     #if($selected)
       Single concepts
     #else
-      <a href="#url_for_home/?&q=$params.get('q')#debug#annotate">
+      <a href="#url_for_home/?#q#debug#annotate">
         Single concepts</a>
     #end
   </span>
@@ -32,7 +32,7 @@
     #if($selected)
       Group By URI
     #else
-        <a href="#url_for_home?#debug#annotate&queryOpts=group&group=true&group.field=termid&group.limit=1000&q=$params.get('q')">
+        <a href="#url_for_home?#debug#annotate&queryOpts=group&group=true&group.field=termid&group.limit=1000#q">
         Group by URI</a>
     #end
   </span>
