@@ -18,6 +18,12 @@ The content of the db can subsequently be fed into a Solr index which can be use
 
     One full harvesting run for the three repositories downloads information for approximately 15M concepts, this can take 48+ hours, so be patient.
 
+    For testing purposes, a number of options exist to limit the harvesting to specific repositories and/or resources,
+
+    **./retrieve.py --help**
+
+    lists the available program arguments.
+
 * **Files**:
 
     * **Configuration:**
