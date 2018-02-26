@@ -100,10 +100,13 @@ This section describes the structure of the harvester in more detail.
 * Implementation
 The design principle for the harvester was to create a flexible way to harvest concept and resource level data from different Semantic repositories. Since different repositories provide different APIs to access their content, there are two main approaches to harvesting. One would be to create a plugin architecture with distinct harvesting workflows implemented as individual plugins. The other would be to create code that is flexible enough to be adapted to the individual repository APIs via configuration files. This implementation follows the latter approach. It is motivated by the observation that the usual sequence of data retrieval steps is quite similar across the different APIs encountered, consisting of two main steps. The first call retrieves a list of resources hosted by a repository, which is subsequently iterated in order to issue per-resource second level calls for retrieving the concepts present there, which are usually again returned as lists. 
 
+<div stype="text-align:center">
 <figure>
 <img align="middle" src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/basic_workflow.PNG" width="500"/>
 <figcaption>Figure 1</figcaption>
 </figure>
+</div>
+
 
 <img align="middle" src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/exampleconfig.PNG"/>
 
