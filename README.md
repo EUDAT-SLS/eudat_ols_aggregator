@@ -12,7 +12,7 @@ The content of the db can subsequently be fed into a Solr index which can be use
 
 * **Invocation**
 
-    The following call starts the harvesting process for EBI-OLS, BioPortal and AgroPortal using the configuration file examples provided in this repository. Please note that repoConfig_noapikey.json](repoConfig_noapikey.json) must be edited regarding the API keys for Bio- and AgroPortal, thus called repoConfig.json here.
+    The following call starts the harvesting process for EBI-OLS, BioPortal and AgroPortal using the configuration file examples provided in this repository. Please note that [repoConfig_noapikey.json](repoConfig_noapikey.json) must be edited regarding the API keys for Bio- and AgroPortal, thus called repoConfig.json here.
 
     **./retrieve.py -c repoConfig.json -m mandatory.json -M mongoConfig.json**  
 
