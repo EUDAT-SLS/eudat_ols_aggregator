@@ -117,13 +117,13 @@ This section describes the structure of the harvester in more detail.
 
     None of the encountered repositories provide means to access information from such different levels via one single API call, but require a two-step procedure instead. For each repository, one call retrieves a list of its hosted resources, which is subsequently iterated in order to issue per-resource second level calls for retrieving the concepts present there, usually again returned as lists. The overall sequence for accessing different repositories is sketched in Figure 1. 
 
-<!-- <figure style="display: block; margin-left: auto; margin-right: auto"> -->
-<p align="center">
-<img src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/basic_workflow.PNG" width="500"/>
-</p>
-<p align="center">
-Figure 1
-</p>
+    <!-- <figure style="display: block; margin-left: auto; margin-right: auto"> -->
+    <p align="center">
+    <img src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/basic_workflow.PNG" width="500"/>
+    </p>
+    <p align="center">
+    Figure 1
+    </p>
 
     Since the different repositories provide different APIs to be used in such harvesting sequences, there are two main approaches to represent them programatically. One would be to create a plugin architecture with distinct harvesting workflows implemented as individual plugins. The other would be to create code that is flexible enough to be adapted to the individual repository APIs via configuration files. This implementation follows the latter approach, since the basic harvesting sequence was to be found very similar across repositories. As Figure 1 moreover suggests, there is an apparent self-similarity between the iterations at the different levels of each harvesting sequence, motivating to find a mechanism which can be recursively applied to these different levels, driven via a similarly recursive configuration file. 
 
