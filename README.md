@@ -99,7 +99,23 @@ This section describes the structure of the harvester in more detail.
 
 * **Implementation**
 
-    The design principle for the harvester was to create a flexible way to harvest concept and resource level data from different Semantic repositories. Since different repositories provide different APIs to access their content, there are two main approaches to harvesting. One would be to create a plugin architecture with distinct harvesting workflows implemented as individual plugins. The other would be to create code that is flexible enough to be adapted to the individual repository APIs via configuration files. This implementation follows the latter approach. It is motivated by the observation that the usual sequence of data retrieval steps is quite similar across the different APIs encountered, consisting of two main steps. The first call retrieves a list of resources hosted by a repository, which is subsequently iterated in order to issue per-resource second level calls for retrieving the concepts present there, which are usually again returned as lists. The overall sequence for accessing different repositories is sketched in Figure 1. 
+    The design principle for the harvester was to create a flexible way to harvest concept and resource level data from different Semantic repositories. Table  lists the information which shall be harvested for each concept, representing a data tuple describing the repository, the resource and the concept.
+
+------------------
+|Concept ID (URI)|
+|Concept Preferred Label|
+|Concept Description|
+|Concept Synonyms|
+|Resource Acronym|
+|Resource ID (URI)|
+|Resource Name|
+|Resource Version Date|
+|Resource Version Info|
+|Repository Name|
+-----------------
+
+
+    Since different repositories provide different APIs to access this information, there are two main approaches to harvesting. One would be to create a plugin architecture with distinct harvesting workflows implemented as individual plugins. The other would be to create code that is flexible enough to be adapted to the individual repository APIs via configuration files. This implementation follows the latter approach. It is motivated by the observation that the usual sequence of data retrieval steps is quite similar across the different APIs encountered, consisting of two main steps. The first call retrieves a list of resources hosted by a repository, which is subsequently iterated in order to issue per-resource second level calls for retrieving the concepts present there, which are usually again returned as lists. The overall sequence for accessing different repositories is sketched in Figure 1. 
 
 <!-- <figure style="display: block; margin-left: auto; margin-right: auto"> -->
 <p align="center">
@@ -109,29 +125,29 @@ This section describes the structure of the harvester in more detail.
 Figure 1
 </p>
 
-As Figure 1 suggests, there is an apparent self-similarity between the iterations at the different levels of the harvesting sequence. This motivates to find a mechanism which can be recursively applied to the different levels in the harvesting sequence, driven via a similarly recursive configuration file. 
+    As Figure 1 suggests, there is an apparent self-similarity between the iterations at the different levels of the harvesting sequence, motivating to find a mechanism which can be recursively applied to the different levels in the harvesting sequence, driven via a similarly recursive configuration file. The key elements of this mechanism were found to be
+
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/exampleconfig.PNG" width="500"/>
+<img src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/DataContainer.PNG" width="300"/>
 </p>
 <p align="center">
 Figure 2
 </p>
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/DataContainer.PNG" width="300"/>
+<img align="middle" src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/DataContainer_invocation.PNG"/>
 </p>
 <p align="center">
 Figure 3
 </p>
 
 <p align="center">
-<img align="middle" src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/DataContainer_invocation.PNG"/>
+<img src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/exampleconfig.PNG" width="800800800800800800800800"/>
 </p>
 <p align="center">
-Figure 4
+Figure 2
 </p>
-
 Harvesting of Semantic Repositories
 
 
