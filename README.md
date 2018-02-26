@@ -133,6 +133,9 @@ This section describes the structure of the harvester in more detail.
 	1. One or more fields to be harvested (cf Table1) are provided via an explicitly given REST API call issued via URL and returned as JSON
 	2. The results of the API call are returned as list, i.e. issuing the given REST API call for the "resources" level will return a list of resources and descriptive metadata about them.
 	3. The location of the list within the JSON file and the individual items within this list, bearing the desired field data can be described via JSONpath
+	4. As long as the lowest level (usually: concept level) is not reached, the returned list of items is iterated, with each iteration spawning a new class instantiation configured to harvest lower level information 
+
+
 <p align="center">
 <img src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/DataContainer.PNG" width="300"/>
 </p>
