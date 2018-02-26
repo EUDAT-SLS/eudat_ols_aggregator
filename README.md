@@ -10,6 +10,14 @@ The content of the db can subsequently be fed into a Solr index which can be use
 
 # Quickstart
 
+* **Invocation**
+
+    The following call starts the harvesting process for EBI-OLS, BioPortal and AgroPortal using the configuration file examples provided in this repository. Please note that repoConfig_noapikey.json](repoConfig_noapikey.json) must be edited regarding the API keys for Bio- and AgroPortal, thus called repoConfig.json here.
+
+    ./retrieve.py -c repoConfig.json -m mandatory.json -M mongoConfig.json  
+
+    One full harvesting run for the three repositories downloads information for approximately 15M concepts, this can take 48+ hours, so be patient.
+
 * **Files**:
 
     * **Configuration:**
@@ -63,11 +71,6 @@ The content of the db can subsequently be fed into a Solr index which can be use
 
       It is highly advisable to have sufficient RAM available on the machine running the harvester, EBI-OLS, Bioportal and Agroportal together yield about 15M classes/instances.
 
-* **Invocation**
-
-    If the repository configuration shall be passed as file:
-
-    ./retrieve.py -c repoConfig.json -m mandatory.json -M mongoConfig.json   
 
 # Documentation
 
