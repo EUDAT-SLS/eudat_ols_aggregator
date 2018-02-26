@@ -151,7 +151,16 @@ This section describes the structure of the harvester in more detail.
     Figure 3
     </p>
 
-    The instantiation and processing of the *DataContainer* objects at the different levels are governed via dedicated configuration files. As indicated above, the current implementation assumes JSON to be the format of the API call results, using JSONpath to locate and extract field information accorindgly. The configuration files are therefore also represented via JSON. Figure 4 shows an example for a configuration for the EBI-OLS repository.  
+    The instantiation and processing of the *DataContainer* objects at the different levels are governed via dedicated configuration files. As indicated above, the current implementation assumes JSON to be the format of the API call results, using JSONpath to locate and extract field information accordingly. The configuration files are therefore also represented via JSON. Figure 4 shows an example for a configuration for the EBI-OLS repository. Each level is represented via distinct blocks:
+
+	| Element | Purpose |
+	|:-------:|:-------:|
+	|Level    | Information about the current level |
+	|URL	  | The URL for the REST API call|
+	|next	  | JSONpath to "next page" URL for paginated call results|
+	|list	  | JSONpath to location of item list within call results|  
+	|fields	  | Dictionary of fields to be extracted for each item in result list (key: Field name, value: JSONpath location/Static value)|
+	|resources| Recursive description of lower level configuration|
 
     <p align="center">
     <img src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/exampleconfig.PNG" width="800"/>
