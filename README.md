@@ -104,7 +104,7 @@ This section describes the structure of the harvester in more detail.
 <figure>
 <p align="center">
 <img src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/basic_workflow.PNG" width="500"/>
-Figure 1
+<figcaption>Figure 1</figcaption>
 </p>
 </figure>
 
