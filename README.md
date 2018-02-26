@@ -173,11 +173,7 @@ This section describes the structure of the harvester in more detail.
     Figure 4
     </p>
 
-Harvesting of Semantic Repositories
-
-
-
-References:
+* References:
 
     (Goldfarb & Le Franc, 2017) 
     D. Goldfarb and Y. Le Franc. Enhancing the Discoverability and Interoperability of Multi-Disciplinary Semantic Repositories. In: A. Algergawy, N. Karam, F. Klan, C. Jonquet: Proc. of the 2nd International Workshop on Semantics for Biodiversity co-located with 16th International Semantic Web Conference (ISWC 2017), Vienna, Austria, October 22nd, 2017. CEUR Workshop Proceedings 1933
