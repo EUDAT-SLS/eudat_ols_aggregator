@@ -82,22 +82,22 @@ The content of the db can subsequently be fed into a Solr index which can be use
 
 This section describes the structure of the harvester in more detail.
 
-* Definitions
+* **Definitions**
 
 
-    * Semantic concept: 
+    * **Semantic concept:** 
 
         Classes, individuals, concepts or terms serving as building blocks for knowledge organization systems such as ontologies, thesauri or controlled vocabularies. A main requirement is that these entities are identified via a unique ID, usually provided in form of a URI, and should have a clear definition of their meaning.
 
-    * Semantic resource: 
+    * **Semantic resource:** 
 
         A collection of Semantic concepts and potential relationships between them, formalized as controlled vocabulary, thesaurus or ontology.
 
-    * Semantic repository: 
+    * **Semantic repository:**
 
         Online repository for uploading, discovering and retrieving semantic resources.
 
-* Implementation
+* **Implementation**
 The design principle for the harvester was to create a flexible way to harvest concept and resource level data from different Semantic repositories. Since different repositories provide different APIs to access their content, there are two main approaches to harvesting. One would be to create a plugin architecture with distinct harvesting workflows implemented as individual plugins. The other would be to create code that is flexible enough to be adapted to the individual repository APIs via configuration files. This implementation follows the latter approach. It is motivated by the observation that the usual sequence of data retrieval steps is quite similar across the different APIs encountered, consisting of two main steps. The first call retrieves a list of resources hosted by a repository, which is subsequently iterated in order to issue per-resource second level calls for retrieving the concepts present there, which are usually again returned as lists. 
 
 <figure>
