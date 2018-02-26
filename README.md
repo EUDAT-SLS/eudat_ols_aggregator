@@ -101,6 +101,8 @@ This section describes the structure of the harvester in more detail.
 
     The design principle for the harvester was to create a flexible way to harvest concept and resource level data from different Semantic repositories. Table  lists the information which shall be harvested for each concept, representing a data tuple describing the repository, the resource and the concept.
 
+<center>
+
     | Level | Field |
     |:-----:|:-----:|
     |Concept|ID (URI)|
@@ -113,6 +115,8 @@ This section describes the structure of the harvester in more detail.
     ||Version Date|
     ||Version Info|
     |Repository|Name|
+
+</center>
 
     Since different repositories provide different APIs to access this information, there are two main approaches to harvesting. One would be to create a plugin architecture with distinct harvesting workflows implemented as individual plugins. The other would be to create code that is flexible enough to be adapted to the individual repository APIs via configuration files. This implementation follows the latter approach. It is motivated by the observation that the usual sequence of data retrieval steps is quite similar across the different APIs encountered, consisting of two main steps. The first call retrieves a list of resources hosted by a repository, which is subsequently iterated in order to issue per-resource second level calls for retrieving the concepts present there, which are usually again returned as lists. The overall sequence for accessing different repositories is sketched in Figure 1. 
 
