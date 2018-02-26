@@ -101,7 +101,6 @@ This section describes the structure of the harvester in more detail.
 
     The design principle for the harvester was to create a flexible way to harvest concept and resource level data from different Semantic repositories. Table  lists the information which shall be harvested for each concept, representing a data tuple describing the repository, the resource and the concept.
 
-
     | Level | Field |
     |:-----:|:-----:|
     |Concept|ID (URI)|
@@ -116,7 +115,7 @@ This section describes the structure of the harvester in more detail.
     |Repository|Name|
 
 
-    Since different repositories provide different APIs to access this information, there are two main approaches to harvesting. One would be to create a plugin architecture with distinct harvesting workflows implemented as individual plugins. The other would be to create code that is flexible enough to be adapted to the individual repository APIs via configuration files. This implementation follows the latter approach. It is motivated by the observation that the usual sequence of data retrieval steps is quite similar across the different APIs encountered, consisting of two main steps. The first call retrieves a list of resources hosted by a repository, which is subsequently iterated in order to issue per-resource second level calls for retrieving the concepts present there, which are usually again returned as lists. The overall sequence for accessing different repositories is sketched in Figure 1. 
+    None of the encountered repositories provide means to access information from such different levels via one single API call, but require a two-step procedure instead. For each repository, one call retrieves a list of its hosted resources, which is subsequently iterated in order to issue per-resource second level calls for retrieving the concepts present there, usually again returned as lists. The overall sequence for accessing different repositories is sketched in Figure 1. 
 
 <!-- <figure style="display: block; margin-left: auto; margin-right: auto"> -->
 <p align="center">
@@ -126,7 +125,9 @@ This section describes the structure of the harvester in more detail.
 Figure 1
 </p>
 
-    As Figure 1 suggests, there is an apparent self-similarity between the iterations at the different levels of the harvesting sequence, motivating to find a mechanism which can be recursively applied to the different levels in the harvesting sequence, driven via a similarly recursive configuration file. The key elements of this mechanism were found to be
+    Since the different repositories provide different APIs to be used in such harvesting sequences, there are two main approaches to represent them programatically. One would be to create a plugin architecture with distinct harvesting workflows implemented as individual plugins. The other would be to create code that is flexible enough to be adapted to the individual repository APIs via configuration files. This implementation follows the latter approach, since the basic harvesting sequence was to be found very similar across repositories. As Figure 1 moreover suggests, there is an apparent self-similarity between the iterations at the different levels of each harvesting sequence, motivating to find a mechanism which can be recursively applied to these different levels, driven via a similarly recursive configuration file. 
+
+    The key elements of this mechanism were found to be
 
 
 <p align="center">
