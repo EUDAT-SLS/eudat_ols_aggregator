@@ -14,7 +14,7 @@ The content of the db can subsequently be fed into a Solr index which can be use
 
     The following call starts the harvesting process for EBI-OLS, BioPortal and AgroPortal using the configuration file examples provided in this repository. Please note that repoConfig_noapikey.json](repoConfig_noapikey.json) must be edited regarding the API keys for Bio- and AgroPortal, thus called repoConfig.json here.
 
-    ./retrieve.py -c repoConfig.json -m mandatory.json -M mongoConfig.json  
+    **./retrieve.py -c repoConfig.json -m mandatory.json -M mongoConfig.json**  
 
     One full harvesting run for the three repositories downloads information for approximately 15M concepts, this can take 48+ hours, so be patient.
 
