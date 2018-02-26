@@ -133,31 +133,33 @@ This section describes the structure of the harvester in more detail.
 	1. One or more fields to be harvested (cf Table1) are provided via an explicitly given REST API call issued via URL and returned as JSON
 	2. The results of the API call are returned as list, i.e. issuing the given REST API call for the "resources" level will return a list of resources and descriptive metadata about them.
 	3. The location of the list within the JSON file and the individual items within this list, bearing the desired field data can be described via JSONpath
-	4. As long as the lowest level (usually: concept level) is not reached, the returned list of items is iterated, with each iteration spawning a new class instantiation configured to harvest lower level information 
+	4. The returned list of items is iterated and for each item, the configured field data extracted. As long as the lowest level (usually: concept level) is not reached, each list item spawns a new class instantiation configured to harvest lower level information.
 
+    <p align="center">
+    <img src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/DataContainer.PNG" width="300"/>
+    </p>
+    <p align="center">
+    Figure 2
+    </p>
 
-<p align="center">
-<img src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/DataContainer.PNG" width="300"/>
-</p>
-<p align="center">
-Figure 2
-</p>
+    Figure 3 shows the recursive instantiation of *DataContainer* objects as progressing through the different harvesting steps. 
 
-    Figure 3 shows the
+    <p align="center">
+    <img align="middle" src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/DataContainer_invocation.PNG"/>
+    </p>
+    <p align="center">
+    Figure 3
+    </p>
 
-<p align="center">
-<img align="middle" src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/DataContainer_invocation.PNG"/>
-</p>
-<p align="center">
-Figure 3
-</p>
+    The instantiation and processing of the *DataContainer* objects at the different levels are governed via dedicated configuration files. As indicated above, the current implementation assumes JSON to be the format of the API call results, using JSONpath to locate and extract field information accorindgly. The configuration files are therefore also represented via JSON. Figure 4 shows an example for a configuration for the EBI-OLS repository.  
 
-<p align="center">
-<img src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/exampleconfig.PNG" width="800800800800800800800800"/>
-</p>
-<p align="center">
-Figure 2
-</p>
+    <p align="center">
+    <img src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/exampleconfig.PNG" width="800"/>
+    </p>
+    <p align="center">
+    Figure 4
+    </p>
+
 Harvesting of Semantic Repositories
 
 
