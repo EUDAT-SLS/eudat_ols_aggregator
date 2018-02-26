@@ -128,7 +128,7 @@ This section describes the structure of the harvester in more detail.
 
     Since the different repositories provide different APIs to be used in such harvesting sequences, there are two main approaches to represent them programatically. One would be to create a plugin architecture with distinct harvesting workflows implemented as individual plugins. The other would be to create code that is flexible enough to be adapted to the individual repository APIs via configuration files. This implementation follows the latter approach, since the basic harvesting sequence was to be found very similar across repositories. As Figure 1 moreover suggests, there is an apparent self-similarity between the iterations at the different levels of each harvesting sequence, motivating to find a mechanism which can be recursively applied to these different levels, driven via a similarly recursive configuration file. 
 
-    Figure 2 shows a diagram of the class used to implement such a mechanism. It is based on the assumption that in each level, 
+    Figure 2 shows a diagram of the *DataContainer* class used here to implement such a mechanism ([DataContainer.py](DataContainer.py)). It is based on the assumption that in each level, 
 
 	1. One or more fields to be harvested (cf Table1) are provided via an explicitly given REST API call issued via URL and returned as JSON
 	2. The results of the API call are returned as list, i.e. issuing the given REST API call for the "resources" level will return a list of resources and descriptive metadata about them.
@@ -142,6 +142,8 @@ This section describes the structure of the harvester in more detail.
 <p align="center">
 Figure 2
 </p>
+
+    Figure 3 shows the
 
 <p align="center">
 <img align="middle" src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/DataContainer_invocation.PNG"/>
