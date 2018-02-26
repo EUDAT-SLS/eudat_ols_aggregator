@@ -162,6 +162,10 @@ This section describes the structure of the harvester in more detail.
 	|fields	  | Dictionary of fields to be extracted for each item in result list (key: Field name, value: JSONpath location/Static value)|
 	|resources| Recursive description of lower level configuration|
 
+   Field information is provided via path/type tuples, enabling to specify if the field data is to be extracted via JSONpath (path = JSONpath, type ="literal/list") or provided as static string (path = static string, type ="static")
+
+   Information provided via the URL field has a special feature, where parts of the provided URL can be marked as tokens which shall be substituted with information extracted for higher level fields. This is indicated in Figure 4 via the red arrows, showing how the part of the URL needed to specify the specific resource for which lower level information is about to be harvested is provided via the respective <ontoprefix> token referring to the field already harvested at resource level. 
+
     <p align="center">
     <img src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/exampleconfig.PNG" width="800"/>
     </p>
