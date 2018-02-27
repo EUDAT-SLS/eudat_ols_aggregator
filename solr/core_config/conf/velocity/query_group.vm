@@ -11,7 +11,7 @@
 
     <label #annTitle("Add the &group.field parameter. Multiselect is supported")>
       Group By:
-      <select id="group" name="group.field" size="1" multiple="true" selected="termid">
+      <select id="group" name="group.field" size="2" multiple="false" selected="termid">
         ## TODO: Handle multiple selects correctly
         ## TODO: fix empty / "No Group" selection
 
@@ -27,11 +27,11 @@
           Term ID
         </option>
 
-       ## <option value="label"
-       ##   #if($groupF == 'label')selected="true"#end
-       ## >
-       ##   Label
-       ##</option>
+        <option value="label_s"
+          #if($groupF == 'label_s')selected="true"#end
+        >
+          Label
+       </option>
 
         ##<option value="ontoprefix"
         ##  #if($groupF == 'ontoprefix')selected="true"#end

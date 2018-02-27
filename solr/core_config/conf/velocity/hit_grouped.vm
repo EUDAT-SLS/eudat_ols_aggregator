@@ -5,7 +5,7 @@
 
 <div class="result-document">
   <div class="result-title">
-    <b>$grouping.key</b>
+    Grouped by: <b>$grouping.key</b>
   </div>
 
   <div>
@@ -39,6 +39,8 @@
 	  #end
 	#end
 
+      #set($groupF = $request.params.get('group.field'))
+
 	#foreach ($group in $grouping.value.groups)
 
 
@@ -53,11 +55,20 @@
 	#end
       #end
 
+
       #set($obs1=0)
       #if($obs1==0)
       <div class="result-body">	
       <div class="group-value">
-        #if($group.groupValue)$group.groupValue#{else}<i>No group</i>#end
+        #if($group.groupValue)
+		#if($groupF == 'label_s')
+			$esc.html($group.doclist[0].getFieldValue('label'))
+		#else
+			 <a href="$group.groupValue" target="_blank"><b>$group.groupValue</b></a>
+		#end
+	#{else}
+		<i>No group</i>
+	#end
         <span #annTitle("The count of the number of documents in this group")>
           ($group.doclist.numFound)
         </span>
@@ -72,14 +83,21 @@
         #annTitle("Contains the top scoring documents in the group")
       >
 	#set($repo_onto={})
-	$esc.html($group.doclist[0].getFieldValue('label'))
+	
+	## $esc.html($group.doclist[0].getFieldValue('label'))
 	<p/>
 	<div class="group-pack">
        	#foreach ($doc in $group.doclist)
+	  #set($labels=$doc.getFieldValue('label_s'))
 	  #set($label=$doc.getFieldValue('label'))
+	  #set($url=$doc.getFieldValue('termid'))
 	  <div class="group-member">
-		<div class="result-title"><b>
-		&nbsp;$esc.html($label)</b></div>
+		<div class="result-title">
+		#if($groupF == 'label_s')
+			&nbsp; <a href="${url}" target="_blank"><b>$esc.html($url)</b></div></a>
+		#else
+			&nbsp;<b>$esc.html($label)</b></div>
+		#end
 		<div>&nbsp;&nbsp;Repo: #field('reponame')&nbsp;Onto: #field('ontoprefix')&nbsp;Obsolete: #field('obsolete')</div>
 		#parse('debug.vm')
 	  </div>	
