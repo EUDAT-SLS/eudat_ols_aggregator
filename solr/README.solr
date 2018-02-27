@@ -1,13 +1,33 @@
 
 #Use solr_writer.py to transfer data from mongodb to solr
 
-* Requirements:
+* Loading concepts harvested into MongoDB into Solr core
 
-    Solr core with schema.xml adjusted to the fields present in the mongo collection
+    * The script [solr_writer.py](solr_writer.py) can be used to transfer data from MongoDB to Solr.
+ 
+      Usage (assuming core name "termcollection":
 
-* Usage:
+      python solr_writer.py -M mongoConfig.json -c "http://127.0.0.1:8983/solr/termcollection/"
 
-    python solr_writer.py -M mongoConfig.json -c "http://127.0.0.1:8983/solr/termcollection/"
+* Solr configuration
 
+    * The subdirectory [core_config](core_config) provides the respective configuration files based on a Solr 5.5.3 installation. The [core_config/conf/schema.xml](solr/core_config/conf/schema.xml) file and the associated stopword lists are modified/reused from the Solr configuration provided by [EBI-OLS](https://github.com/EBISPOT/OLS/tree/master/ols-solr/src/main/solr-5-config/ontology/conf)
+
+    *  The subdirectory [core_config/conf/velocity](core_config/conf/velocity) contains Velocity templates for rendering the faceted view prototype.
+
+* Velocity based faceted search example on https://bsceudatwp8.bsc.es/termbrowser
+
+    The[faceted class search example](https://bsceudatwp8.bsc.es/termbrowser) operates on 13,8M+ classes harvested from EBI-OLS, AgroPortal and BioPortal in early February 2018. Currently, no instance level terms are included.
+
+    The interface provides a view on the harvested classes along the facets repository, resource prefix and obsolete term and is divided into two main search types. The "Single concepts" search type allows to enter arbitrary search terms and to retrieve all concepts matching by label. An autosuggest feature supports the search process. 
+
+    <p align="center">
+    <img src="https://raw.githubusercontent.com/EUDAT-SLS/eudat_ols_aggregator/adea9dc6f063b09d6ce4ff3cf1ed45e6bebaac2e/images/DataContainer.PNG" width="300"/>
+    </p>
+    <p align="center">
+    Figure 2
+    </p>
+
+   
 
 
