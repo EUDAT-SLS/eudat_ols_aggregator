@@ -15,6 +15,15 @@
 
     *  The subdirectory [core_config/conf/velocity](core_config/conf/velocity) contains Velocity templates for rendering the faceted view prototype.
 
+        The provided configuration files and Velocity templates were tested on a Solr 5.5.3 installation. They assume a Solr core named "termcollection" and should be put into the respective location (e.g. /var/solr/data/termcollection/...). The Velocity templates require some static files (css, img, js) which are located in the same directory but must be moved to the root solr server directory into a subdirectory called "termbrowser_resources" (e.g. [SOLR_HOME]/server/solr-webapp/webapp/termbrowser_resources/[css|img|js]/*).
+
+        For security reasons, a number of redirections should be set:
+
+        * The Web URL pointing at the Velocity faceted browser installation ([solr_root_url]/solr/termcollection/browse) is redirected to ([web_server_root_url]/termbrowser)
+        * The Web URL pointing at the static resources ([solr_root_url]/solr/termbrowser_resources) is redirected to ([web_server_root_url]/termbrowser_resources)
+        * The Web URL pointing at the Solr core terms API ([solr_root_url]/solr/termcollection/terms) is redirected to ([web_server_root_url]/termfinder)
+
+
 * Velocity based faceted search example on https://bsceudatwp8.bsc.es/termbrowser
 
     The[faceted class search example](https://bsceudatwp8.bsc.es/termbrowser) operates on 13,8M+ classes harvested from EBI-OLS, AgroPortal and BioPortal in early February 2018. Currently, no instance level terms are included.
