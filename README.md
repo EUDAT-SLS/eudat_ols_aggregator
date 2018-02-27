@@ -43,13 +43,7 @@ The content of the db can subsequently be fed into a Solr index which can be use
 
     * **Solr related:**
 
-      the [solr directory](solr) contains various items for creating the Solr index.
-
-        * The script [solr_writer.py](solr/solr_writer.py) should be used for populating a Solr core with information from the database. 
-
-        * The subdirectory [core_config](solr/core_config) provides the respective configuration files based on a Solr 5.5.3 installation. The [core_config/conf/schema.xml](solr/core_config/conf/schema.xml) file and the associated stopword lists are modified/reused from the Solr configuration provided by [EBI-OLS](https://github.com/EBISPOT/OLS/tree/master/ols-solr/src/main/solr-5-config/ontology/conf)
-
-        *  The subdirectory [core_config/conf/velocity](solr/core_config/conf/velocity) contains Velocity templates for rendering the faceted view prototype.
+      the [solr directory](solr) contains various items for creating the Solr index. See [solr/README.md](solr/README.md) for further information.
 
 * **Requirements:**
 
@@ -60,17 +54,6 @@ The content of the db can subsequently be fed into a Solr index which can be use
     * **Repository configuration:**
 
       The list of configured repositories can be passed as file such as in [repoConfig_noapikey.json](repoConfig_noapikey.json) or stored in the MongoDB in a dedicated collection, which can also be specified via [mongoConfig.json](mongoConfig.json)
-
-    * **Solr installation:**
-
-        The provided configuration files and Velocity templates were tested on a Solr 5.5.3 installation. They assume a Solr core named "termcollection" and should be put into the respective location (e.g. /var/solr/data/termcollection/...). The Velocity templates require some static files (css, img, js) which are located in the same directory but must be moved to the root solr server directory into a subdirectory called "termbrowser_resources" (e.g. [SOLR_HOME]/server/solr-webapp/webapp/termbrowser_resources/[css|img|js]/*). 
-
-        For security reasons, a number of redirections should be set:
-
-        * The Web URL pointing at the Velocity faceted browser installation ([solr_root_url]/solr/termcollection/browse) is redirected to ([web_server_root_url]/termbrowser)
-        * The Web URL pointing at the static resources ([solr_root_url]/solr/termbrowser_resources) is redirected to ([web_server_root_url]/termbrowser_resources)
-        * The Web URL pointing at the Solr core terms API ([solr_root_url]/solr/termcollection/terms) is redirected to ([web_server_root_url]/termfinder)
- 
 
     * **System configuration:**
 
